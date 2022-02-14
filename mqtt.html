@@ -56,12 +56,18 @@ Blog: https://iotbytes.wordpress.com/
     }
 
     // Send MQTT Message 
-    function mqtt_Publish_Message(){
-      message = new Paho.MQTT.Message("hi");
+    setInterval(function() {
+  //Your code
+  message = new Paho.MQTT.Message("hi");
       message.destinationName = "Game";
       MQTT_Client.send(message);
       Set_New_Console_Msg("Published " + "\"" + document.getElementById("txt_MQTT_Msg").value + "\"" + "to MQTT Topic: " + "\"" +  document.getElementById("txt_MQTT_Publish_Topic").value + "\"");
-    }
+}, 10); //Every 1000ms = 1sec
+      
+	  
+    
+	
+	
 
     // called when the client connects
     function onConnect() {
@@ -120,8 +126,7 @@ Blog: https://iotbytes.wordpress.com/
     }
 
 
-
-  </script>
+</script>
 		
   
   </head>
