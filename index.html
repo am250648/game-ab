@@ -98,7 +98,7 @@
 
     // Subscribe to MQTT Topic
     function mqtt_Subscribe_to_Topic(){
-      MQTT_Subscribe_Topic = document.getElementById("txt_MQTT_Subscribe_Topic").value;
+      MQTT_Subscribe_Topic = "";//document.getElementById("txt_MQTT_Subscribe_Topic").value;
       MQTT_Client.subscribe(MQTT_Subscribe_Topic);
       Set_New_Console_Msg("Subscribed to MQTT Topic: " + "\"" + MQTT_Subscribe_Topic + "\"" );
     }
@@ -109,7 +109,7 @@
   message = new Paho.MQTT.Message("hi");
       message.destinationName = "Game";
       MQTT_Client.send(message);
-      Set_New_Console_Msg("Published " + "\"" + document.getElementById("txt_MQTT_Msg").value + "\"" + "to MQTT Topic: " + "\"" +  document.getElementById("txt_MQTT_Publish_Topic").value + "\"");
+      //Set_New_Console_Msg("Published " + "\"" + document.getElementById("txt_MQTT_Msg").value + "\"" + "to MQTT Topic: " + "\"" +  document.getElementById("txt_MQTT_Publish_Topic").value + "\"");
 }, 500); //Every 1000ms = 1sec
       
 	  
@@ -120,26 +120,26 @@
     // called when the client connects
     function onConnect() {
       // Once a connection has been made, make a subscription and send a message.
-      Set_New_Console_Msg("Connected with MQTT Broker: " + "\"" + document.getElementById("txt_MQTT_Broker_URL").value + "\"");
+      //Set_New_Console_Msg("Connected with MQTT Broker: " + "\"" + document.getElementById("txt_MQTT_Broker_URL").value + "\"");
     }
 
     // called when the client loses its connection
     function onConnectionLost(responseObject) {
       if (responseObject.errorCode !== 0) {
-        Set_New_Console_Msg("Connection Lost with MQTT Broker. Error: " + "\"" +responseObject.errorMessage + "\"");
+       // Set_New_Console_Msg("Connection Lost with MQTT Broker. Error: " + "\"" +responseObject.errorMessage + "\"");
       }
     }
 
     // called when a message arrives
     function onMessageArrived(message) {
-      Set_New_Console_Msg("MQTT Message Recieved. "  + " Message: " + "\"" +  message.payloadString + "\"" + " MQTT Topic: " + "\"" + message.destinationName + "\"" + " QoS Value: " + "\"" + message.qos + "\"");
+      //Set_New_Console_Msg("MQTT Message Recieved. "  + " Message: " + "\"" +  message.payloadString + "\"" + " MQTT Topic: " + "\"" + message.destinationName + "\"" + " QoS Value: " + "\"" + message.qos + "\"");
     } 
 
 
     // Document Ready Event
     $(document).ready( function() {
       //Set default MQTT Broker WebSocket URL
-      document.getElementById("txt_MQTT_Broker_URL").value = "ws://broker.hivemq.com:8000/mqtt";
+      //document.getElementById("txt_MQTT_Broker_URL").value = "ws://broker.hivemq.com:8000/mqtt";
       //Generate Random MQTT Clinet ID
       gen_MQTT_Client_ID();
 
