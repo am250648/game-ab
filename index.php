@@ -1,1 +1,1 @@
-<?php include("mqtt.html"); ?>
+<?php include("index.html"); ?>
