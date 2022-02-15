@@ -34,7 +34,7 @@ Blog: https://iotbytes.wordpress.com/
     function mqtt_Connect_with_Broker(){
 
       // Set variables
-      WebSocket_MQTT_Broker_URL = document.getElementById("txt_MQTT_Broker_URL").value;
+      WebSocket_MQTT_Broker_URL = "ws://broker.hivemq.com:8000/mqtt";
       MQTT_Client_ID = document.getElementById("txt_MQTT_Client_ID").value;
 
       // Create a MQTT Client nstance 
