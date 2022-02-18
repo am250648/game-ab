@@ -91,7 +91,8 @@ Blog: https://iotbytes.wordpress.com/
     // Document Ready Event
     $(document).ready( function() {
       //Set default MQTT Broker WebSocket URL
-      document.getElementById("txt_MQTT_Broker_URL").value = "hello";
+      document.getElementById("txt_MQTT_Broker_URL").value = "ws://borker.hivemq.com:8000/mqtt";
+
       //Generate Random MQTT Clinet ID
       gen_MQTT_Client_ID();
 
