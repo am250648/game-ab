@@ -82,7 +82,7 @@
     function mqtt_Connect_with_Broker(){
 
       // Set variables
-      WebSocket_MQTT_Broker_URL = "wss://mqtt3.thingspeak.com:8883/mqtt";
+      WebSocket_MQTT_Broker_URL = "wss://iot.eclipse.org:8883/mqtt";
       MQTT_Client_ID = document.getElementById("txt_MQTT_Client_ID").value;
 
       // Create a MQTT Client nstance 
@@ -139,7 +139,7 @@
     // Document Ready Event
     $(document).ready( function() {
       //Set default MQTT Broker WebSocket URL
-      //document.getElementById("txt_MQTT_Broker_URL").value = "wss://mqtt3.thingspeak.com:443/mqtt"; //"ws://broker.hivemq.com:8000/mqtt";
+      document.getElementById("txt_MQTT_Broker_URL").value = "put broker here"; //"ws://broker.hivemq.com:8000/mqtt";
       //Generate Random MQTT Clinet ID
       gen_MQTT_Client_ID();
 
