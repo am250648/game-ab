@@ -21,8 +21,10 @@ Blog: https://iotbytes.wordpress.com/
   <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
 
 
+	<script type="text/javascript" src="js/device.js"></script>
 
   <script type="text/javascript">
+  
 
     //  Variables
     var WebSocket_MQTT_Broker_URL = "";
@@ -39,16 +41,7 @@ Blog: https://iotbytes.wordpress.com/
 
       // Create a MQTT Client nstance 
       MQTT_Client = new Paho.MQTT.Client(WebSocket_MQTT_Broker_URL, MQTT_Client_ID);
-	    
-	    var options = {
-			useSSL:true,
-			timeout: 3,
-			//userName:"toyerbnp",
-			//password:"JUlkU47AEy8o",
-			onSuccess: onConnect
-			
-		  
-		 };
+
       // set callback handlers
       MQTT_Client.onConnectionLost = onConnectionLost;
       MQTT_Client.onMessageArrived = onMessageArrived;
@@ -169,6 +162,7 @@ Blog: https://iotbytes.wordpress.com/
            <button type="button" class="btn btn-primary col-sm-4" onclick="mqtt_Subscribe_to_Topic();">Subscribe</button>
         </div>      
       </div>
+	  
     </form>
 
     <hr>
