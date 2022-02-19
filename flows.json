@@ -1,0 +1,337 @@
+[
+    {
+        "id": "884e3d17174c73c2",
+        "type": "tab",
+        "label": "IoTStarterDashboard",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "74e562beba580111",
+        "type": "mqtt in",
+        "z": "884e3d17174c73c2",
+        "name": "",
+        "topic": "Game",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "152e1e6d744154b7",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 290,
+        "y": 340,
+        "wires": [
+            [
+                "3a068546603b199f",
+                "dae7206620560bdb"
+            ]
+        ]
+    },
+    {
+        "id": "3a068546603b199f",
+        "type": "function",
+        "z": "884e3d17174c73c2",
+        "name": "dataFromatter",
+        "func": "var a=msg.payload;\nvar g=a.split(',')\nvar dataArray=[parseFloat(g[0].replace('X: ','')),parseFloat(g[1].replace('Y: ','')),parseFloat(g[2].replace('Z: ',''))]\nmsg.payload=dataArray;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 440,
+        "wires": [
+            [
+                "f7743f4d4b0a8a7a",
+                "361a9fc5f0781310",
+                "e6cdea9347c1a910",
+                "dae7206620560bdb"
+            ]
+        ]
+    },
+    {
+        "id": "456b8921bfd9a326",
+        "type": "ui_chart",
+        "z": "884e3d17174c73c2",
+        "name": "",
+        "group": "a27154f70136ed9d",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "label": "Accelerometer Data (X,Y,Z)",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 1100,
+        "y": 620,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dae7206620560bdb",
+        "type": "debug",
+        "z": "884e3d17174c73c2",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 900,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "f7743f4d4b0a8a7a",
+        "type": "function",
+        "z": "884e3d17174c73c2",
+        "name": "dataAnalyzerX-Axis",
+        "func": "var dataArray=msg.payload;\nmsg.payload=dataArray[0];\nmsg.topic=\"X-Axis\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 730,
+        "y": 560,
+        "wires": [
+            [
+                "456b8921bfd9a326"
+            ]
+        ]
+    },
+    {
+        "id": "361a9fc5f0781310",
+        "type": "function",
+        "z": "884e3d17174c73c2",
+        "name": "dataAnalyzerY-Axis",
+        "func": "var dataArray=msg.payload;\nmsg.payload=dataArray[1];\nmsg.topic=\"Y-Axis\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 730,
+        "y": 600,
+        "wires": [
+            [
+                "456b8921bfd9a326"
+            ]
+        ]
+    },
+    {
+        "id": "e6cdea9347c1a910",
+        "type": "function",
+        "z": "884e3d17174c73c2",
+        "name": "dataAnalyzerZ-Axis",
+        "func": "var dataArray=msg.payload;\nmsg.payload=dataArray[2];\nmsg.topic=\"Z-Axis\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 730,
+        "y": 640,
+        "wires": [
+            [
+                "456b8921bfd9a326"
+            ]
+        ]
+    },
+    {
+        "id": "210b97a1df1e38f8",
+        "type": "inject",
+        "z": "884e3d17174c73c2",
+        "name": "clearAll",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 650,
+        "y": 740,
+        "wires": [
+            [
+                "76559ffc8bf39c43"
+            ]
+        ]
+    },
+    {
+        "id": "76559ffc8bf39c43",
+        "type": "function",
+        "z": "884e3d17174c73c2",
+        "name": "clearChart",
+        "func": "var dataArray=msg.payload;\nmsg.payload=[];\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 810,
+        "y": 700,
+        "wires": [
+            [
+                "456b8921bfd9a326"
+            ]
+        ]
+    },
+    {
+        "id": "38c956564bf0a609",
+        "type": "mqtt out",
+        "z": "884e3d17174c73c2",
+        "name": "",
+        "topic": "amnpkr/feeds/acce",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "28f7ceb9.8189a2",
+        "x": 280,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "d8c6a439fc2c3ab6",
+        "type": "inject",
+        "z": "884e3d17174c73c2",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"X\": -0.096311115,\"Y\": \"2\",\"Z\": \"2\"}",
+        "payloadType": "json",
+        "x": 80,
+        "y": 80,
+        "wires": [
+            [
+                "38c956564bf0a609"
+            ]
+        ]
+    },
+    {
+        "id": "152e1e6d744154b7",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "test.mosquitto.org",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    },
+    {
+        "id": "a27154f70136ed9d",
+        "type": "ui_group",
+        "name": "IoTStarter",
+        "tab": "03b8dcbd47a56682",
+        "order": 1,
+        "disp": true,
+        "width": 19,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "28f7ceb9.8189a2",
+        "type": "mqtt-broker",
+        "name": "hivemq",
+        "broker": "io.adafruit.com",
+        "port": "1883",
+        "clientid": "23o4oj123kn41lk2tlk14g3234",
+        "autoConnect": true,
+        "usetls": false,
+        "compatmode": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "amnpkr/feeds/acce",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    },
+    {
+        "id": "03b8dcbd47a56682",
+        "type": "ui_tab",
+        "name": "IoTStarter",
+        "icon": "dashboard",
+        "order": 4,
+        "disabled": false,
+        "hidden": false
+    }
+]
