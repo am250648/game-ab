@@ -23,8 +23,7 @@
         "y": 340,
         "wires": [
             [
-                "3a068546603b199f",
-                "dae7206620560bdb"
+                "3a068546603b199f"
             ]
         ]
     },
@@ -46,6 +45,7 @@
                 "f7743f4d4b0a8a7a",
                 "361a9fc5f0781310",
                 "e6cdea9347c1a910",
+                "f5d938aa2b545c52",
                 "dae7206620560bdb"
             ]
         ]
@@ -215,25 +215,19 @@
         ]
     },
     {
-        "id": "38c956564bf0a609",
-        "type": "mqtt out",
+        "id": "4f91013c6f2ad8d4",
+        "type": "mysql",
         "z": "884e3d17174c73c2",
+        "mydb": "e99863d875d47126",
         "name": "",
-        "topic": "amnpkr/feeds/acce",
-        "qos": "",
-        "retain": "",
-        "respTopic": "",
-        "contentType": "",
-        "userProps": "",
-        "correl": "",
-        "expiry": "",
-        "broker": "28f7ceb9.8189a2",
-        "x": 280,
-        "y": 160,
-        "wires": []
+        "x": 320,
+        "y": 660,
+        "wires": [
+            []
+        ]
     },
     {
-        "id": "d8c6a439fc2c3ab6",
+        "id": "787c4823c6e977f3",
         "type": "inject",
         "z": "884e3d17174c73c2",
         "name": "",
@@ -251,14 +245,49 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "payload": "{\"X\": -0.096311115,\"Y\": \"2\",\"Z\": \"2\"}",
-        "payloadType": "json",
-        "x": 80,
-        "y": 80,
+        "payload": "x:\"1\",y:\"2\",z:\"3\"",
+        "payloadType": "str",
+        "x": 490,
+        "y": 320,
         "wires": [
             [
-                "38c956564bf0a609"
+                "f5d938aa2b545c52"
             ]
+        ]
+    },
+    {
+        "id": "f5d938aa2b545c52",
+        "type": "cloudantplus out",
+        "z": "884e3d17174c73c2",
+        "name": "",
+        "cloudant": "dcd6c8d7c4388239",
+        "database": "game",
+        "service": "_ext_",
+        "payonly": false,
+        "operation": "insert",
+        "x": 930,
+        "y": 300,
+        "wires": [
+            [
+                "dae7206620560bdb"
+            ]
+        ]
+    },
+    {
+        "id": "fb2bf95cd5e208e0",
+        "type": "cloudantplus in",
+        "z": "884e3d17174c73c2",
+        "name": "",
+        "cloudant": "dcd6c8d7c4388239",
+        "database": "",
+        "service": "_ext_",
+        "search": "_id_",
+        "design": "",
+        "index": "",
+        "x": 310,
+        "y": 720,
+        "wires": [
+            []
         ]
     },
     {
@@ -299,31 +328,20 @@
         "className": ""
     },
     {
-        "id": "28f7ceb9.8189a2",
-        "type": "mqtt-broker",
-        "name": "hivemq",
-        "broker": "io.adafruit.com",
-        "port": "1883",
-        "clientid": "23o4oj123kn41lk2tlk14g3234",
-        "autoConnect": true,
-        "usetls": false,
-        "compatmode": false,
-        "protocolVersion": "4",
-        "keepalive": "60",
-        "cleansession": true,
-        "birthTopic": "amnpkr/feeds/acce",
-        "birthQos": "0",
-        "birthPayload": "",
-        "birthMsg": {},
-        "closeTopic": "",
-        "closeQos": "0",
-        "closePayload": "",
-        "closeMsg": {},
-        "willTopic": "",
-        "willQos": "0",
-        "willPayload": "",
-        "willMsg": {},
-        "sessionExpiry": ""
+        "id": "e99863d875d47126",
+        "type": "MySQLdatabase",
+        "name": "",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "hassdb",
+        "tz": "",
+        "charset": "UTF8"
+    },
+    {
+        "id": "dcd6c8d7c4388239",
+        "type": "cloudantplus",
+        "host": "https://apikey-v2-a5191i1mawpubpxhi210c0n8xh44pjtoe2n4z86nbnl:41afb04d6075966d5dbe372e3cf35de7@89aa8ba2-e33d-40e9-8688-efb98e81b804-bluemix.cloudantnosqldb.appdomain.cloud",
+        "name": "MYSPACE"
     },
     {
         "id": "03b8dcbd47a56682",
