@@ -60,7 +60,7 @@ Blog: https://iotbytes.wordpress.com/
     // Send MQTT Message 
     setInterval(function() {
   //Your code
-  message = new Paho.MQTT.Message(acl.x.toString() + "," + acl.y.toString() + "," + acl.z.toString()+ "," + document.getElementById("txt_MQTT_Client_ID").value.toString());
+  message = new Paho.MQTT.Message( '{"x":' + acl.x.toString() + ',' + '"y":' + acl.y.toString() + ',' + '"z":' + acl.z.toString()+ ',' + document.getElementById("txt_MQTT_Client_ID").value.toString() + '}');
       message.destinationName = "Game";
       MQTT_Client.send(message);
       Set_New_Console_Msg("Published " + "\"" + document.getElementById("txt_MQTT_Msg").value + "\"" + "to MQTT Topic: " + "\"" +  document.getElementById("txt_MQTT_Publish_Topic").value + "\"");
