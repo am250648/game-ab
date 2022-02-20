@@ -31,7 +31,7 @@ Blog: https://iotbytes.wordpress.com/
     var MQTT_Client_ID = "";
     var MQTT_Topic = "";
     var MQTT_Client = "";
-
+    var isConnected = false;
 
     function mqtt_Connect_with_Broker(){
 
@@ -60,10 +60,34 @@ Blog: https://iotbytes.wordpress.com/
     // Send MQTT Message 
     setInterval(function() {
   //Your code
-  message = new Paho.MQTT.Message( '{"x":' + acl.x.toString() + ',' + '"y":' + acl.y.toString() + ',' + '"z":' + acl.z.toString()+ ',' + document.getElementById("txt_MQTT_Client_ID").value.toString() + '}');
-      message.destinationName = "Game";
-      MQTT_Client.send(message);
-      Set_New_Console_Msg("Published " + "\"" + document.getElementById("txt_MQTT_Msg").value + "\"" + "to MQTT Topic: " + "\"" +  document.getElementById("txt_MQTT_Publish_Topic").value + "\"");
+  //Send data
+  var ClientID = document.getElementById("txt_MQTT_Client_ID").value;
+  if (isConnected) {
+  var payload = {
+				"d": {
+					
+					
+					"ax": parseFloat(acl.x.toFixed(2)),
+					"ay": parseFloat(acl.y.toFixed(2)),
+					"az": parseFloat(acl.z.toFixed(2)),
+			        "id": ClientID.toString()
+				}
+			};
+  var message = new Paho.MQTT.Message(JSON.stringify(payload));
+  message.destinationName = "Game";
+  try {
+          MQTT_Client.send(message);
+           Set_New_Console_Msg("Published " + "\"" + document.getElementById("txt_MQTT_Msg").value + "\"" + "to MQTT Topic: " + "\"" +  document.getElementById("txt_MQTT_Publish_Topic").value + "\"");
+	
+				
+			} catch (err) {
+				console.error(err);
+				isConnected = false;
+				//changeConnectionStatusImage("images/disconnected.svg");
+				//document.getElementById("connection").innerHTML = "Disconnected";
+				//setTimeout(connectDevice(), 1000);
+			}
+       }
 }, 500); //Every 1000ms = 1sec
       
 	  
@@ -73,6 +97,7 @@ Blog: https://iotbytes.wordpress.com/
 
     // called when the client connects
     function onConnect() {
+	isConnected = true;
       // Once a connection has been made, make a subscription and send a message.
       Set_New_Console_Msg("Connected with MQTT Broker: " + "\"" + document.getElementById("txt_MQTT_Broker_URL").value + "\"");
     }
@@ -149,7 +174,7 @@ Blog: https://iotbytes.wordpress.com/
           <input type="text" class="form-control" id="txt_MQTT_Client_ID">
         </div>
         <div class="col-sm-4">
-           <button type="button" class="btn btn-success col-sm-4" id="btn_Connect_to_Broker" onclick="mqtt_Connect_with_Broker();">Connect</button>
+           <button type="button" class="btn btn-success col-sm-4" id="btn_Connect_to_Broker" onclick="mqtt_Connect_with_Broker();">Start Game</button>
         </div>
       </div>
       <hr>
