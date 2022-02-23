@@ -1,0 +1,495 @@
+[
+    {
+        "id": "6643ec3b6f1d0d6d",
+        "type": "tab",
+        "label": "game",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "35059ab265951dac",
+        "type": "inject",
+        "z": "6643ec3b6f1d0d6d",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "SELECT idClients,         SUM(x*x+y*y+z*z) AS result FROM game.clients GROUP BY idClients ORDER BY result DESC;",
+        "payload": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 380,
+        "wires": [
+            [
+                "ffec28a19cad5908"
+            ]
+        ]
+    },
+    {
+        "id": "ffec28a19cad5908",
+        "type": "mysql",
+        "z": "6643ec3b6f1d0d6d",
+        "mydb": "55d62ff905a22938",
+        "name": "",
+        "x": 360,
+        "y": 420,
+        "wires": [
+            [
+                "46464d584f7e1ad6"
+            ]
+        ]
+    },
+    {
+        "id": "8b93a1ef308f537c",
+        "type": "debug",
+        "z": "6643ec3b6f1d0d6d",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 730,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "46464d584f7e1ad6",
+        "type": "function",
+        "z": "6643ec3b6f1d0d6d",
+        "name": "",
+        "func": "return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 540,
+        "y": 360,
+        "wires": [
+            [
+                "8b93a1ef308f537c"
+            ]
+        ]
+    },
+    {
+        "id": "f29363f9ed31326e",
+        "type": "function",
+        "z": "6643ec3b6f1d0d6d",
+        "name": "",
+        "func": "msg.topic = 'INSERT INTO `game`.`clients`(`idclients`,`x`,`y`,`z`)VALUES(\"'+msg.payload.idClients+'\",'+msg.payload.x+','+msg.payload.y+','+msg.payload.z+');';\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 900,
+        "wires": [
+            [
+                "3fd2ab14864b9fbc"
+            ]
+        ]
+    },
+    {
+        "id": "b62404b4d77973f5",
+        "type": "mqtt in",
+        "z": "6643ec3b6f1d0d6d",
+        "name": "",
+        "topic": "Game",
+        "qos": "0",
+        "datatype": "auto",
+        "broker": "152e1e6d744154b7",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 90,
+        "y": 800,
+        "wires": [
+            [
+                "fd1f6d7451dd935e"
+            ]
+        ]
+    },
+    {
+        "id": "3fd2ab14864b9fbc",
+        "type": "mysql",
+        "z": "6643ec3b6f1d0d6d",
+        "mydb": "55d62ff905a22938",
+        "name": "",
+        "x": 540,
+        "y": 780,
+        "wires": [
+            [
+                "730919e734a65f08"
+            ]
+        ]
+    },
+    {
+        "id": "730919e734a65f08",
+        "type": "debug",
+        "z": "6643ec3b6f1d0d6d",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 690,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "eb79d0fe1d609d5a",
+        "type": "comment",
+        "z": "6643ec3b6f1d0d6d",
+        "name": "who wins?",
+        "info": "",
+        "x": 140,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "41c194df52143227",
+        "type": "comment",
+        "z": "6643ec3b6f1d0d6d",
+        "name": "inject data to database",
+        "info": "",
+        "x": 160,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "9fb798a151acec79",
+        "type": "inject",
+        "z": "6643ec3b6f1d0d6d",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "DROP TABLE IF EXISTS clients;",
+        "payload": "",
+        "payloadType": "date",
+        "x": 340,
+        "y": 660,
+        "wires": [
+            [
+                "03f94e12630ebeb8"
+            ]
+        ]
+    },
+    {
+        "id": "03f94e12630ebeb8",
+        "type": "mysql",
+        "z": "6643ec3b6f1d0d6d",
+        "mydb": "55d62ff905a22938",
+        "name": "",
+        "x": 520,
+        "y": 640,
+        "wires": [
+            [
+                "22bc56afca1981ec"
+            ]
+        ]
+    },
+    {
+        "id": "22bc56afca1981ec",
+        "type": "debug",
+        "z": "6643ec3b6f1d0d6d",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 750,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "457e090170dc6d67",
+        "type": "comment",
+        "z": "6643ec3b6f1d0d6d",
+        "name": "delete database table",
+        "info": "",
+        "x": 320,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "73fa101f91449397",
+        "type": "inject",
+        "z": "6643ec3b6f1d0d6d",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "CREATE TABLE `game`.`clients` (   `idclients` VARCHAR(45) NULL,   `x` VARCHAR(45) NULL,   `y` VARCHAR(45) NULL,   `z` VARCHAR(45) NULL);",
+        "payload": "",
+        "payloadType": "date",
+        "x": 240,
+        "y": 120,
+        "wires": [
+            [
+                "0ca1933b6239d311"
+            ]
+        ]
+    },
+    {
+        "id": "0ca1933b6239d311",
+        "type": "mysql",
+        "z": "6643ec3b6f1d0d6d",
+        "mydb": "55d62ff905a22938",
+        "name": "",
+        "x": 420,
+        "y": 100,
+        "wires": [
+            [
+                "a42af26bc7a8d15d"
+            ]
+        ]
+    },
+    {
+        "id": "a42af26bc7a8d15d",
+        "type": "debug",
+        "z": "6643ec3b6f1d0d6d",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 650,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "fab22339753f7420",
+        "type": "comment",
+        "z": "6643ec3b6f1d0d6d",
+        "name": "Start game and xcreate table with attibutes",
+        "info": "",
+        "x": 280,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "9737aa275a688c4c",
+        "type": "inject",
+        "z": "6643ec3b6f1d0d6d",
+        "name": "ali",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "INSERT INTO `game`.`clients` (`idclients`, `x`, `y`, `z`) VALUES (\"ali\",1,12,1);",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 1100,
+        "wires": [
+            [
+                "cd298ffe229c835d"
+            ]
+        ]
+    },
+    {
+        "id": "cd298ffe229c835d",
+        "type": "mysql",
+        "z": "6643ec3b6f1d0d6d",
+        "mydb": "55d62ff905a22938",
+        "name": "",
+        "x": 400,
+        "y": 1120,
+        "wires": [
+            [
+                "7ce0d5df6b58a9e1"
+            ]
+        ]
+    },
+    {
+        "id": "7ce0d5df6b58a9e1",
+        "type": "debug",
+        "z": "6643ec3b6f1d0d6d",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 630,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "756bf9a178d48ba4",
+        "type": "comment",
+        "z": "6643ec3b6f1d0d6d",
+        "name": "test inject data to database",
+        "info": "",
+        "x": 210,
+        "y": 1060,
+        "wires": []
+    },
+    {
+        "id": "99fc960a8c88f27a",
+        "type": "inject",
+        "z": "6643ec3b6f1d0d6d",
+        "name": "amin",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "INSERT INTO `game`.`clients` (`idclients`, `x`, `y`, `z`) VALUES (\"amin\",1,12,1);",
+        "payload": "",
+        "payloadType": "date",
+        "x": 190,
+        "y": 1160,
+        "wires": [
+            [
+                "cd298ffe229c835d"
+            ]
+        ]
+    },
+    {
+        "id": "79ae706b4439531d",
+        "type": "inject",
+        "z": "6643ec3b6f1d0d6d",
+        "name": "ahmed",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "INSERT INTO `game`.`clients` (`idclients`, `x`, `y`, `z`) VALUES (\"ahmed\",1,12,1);",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 1220,
+        "wires": [
+            [
+                "cd298ffe229c835d"
+            ]
+        ]
+    },
+    {
+        "id": "fd1f6d7451dd935e",
+        "type": "json",
+        "z": "6643ec3b6f1d0d6d",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 230,
+        "y": 900,
+        "wires": [
+            [
+                "f29363f9ed31326e"
+            ]
+        ]
+    },
+    {
+        "id": "55d62ff905a22938",
+        "type": "MySQLdatabase",
+        "name": "hassdb",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "game",
+        "tz": "",
+        "charset": "utf8mb4"
+    },
+    {
+        "id": "152e1e6d744154b7",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "test.mosquitto.org",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    }
+]
