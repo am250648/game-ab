@@ -64,14 +64,14 @@ Blog: https://iotbytes.wordpress.com/
   var ClientID = document.getElementById("txt_MQTT_Client_ID").value;
   if (isConnected) {
   var payload = {
-				"d": {
+				//"d": {
 					
 					
-					"ax": parseFloat(acl.x.toFixed(2)),
-					"ay": parseFloat(acl.y.toFixed(2)),
-					"az": parseFloat(acl.z.toFixed(2)),
-			        "id": ClientID.toString()
-				}
+					"x": 1,//parseFloat(acl.x.toFixed(2)),
+					"y": 2,//parseFloat(acl.y.toFixed(2)),
+					"z": 3,//parseFloat(acl.z.toFixed(2)),
+			        "idClients": "tester"//ClientID.toString()
+				//}
 			};
   var message = new Paho.MQTT.Message(JSON.stringify(payload));
   message.destinationName = "Game";
