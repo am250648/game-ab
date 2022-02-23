@@ -67,10 +67,10 @@ Blog: https://iotbytes.wordpress.com/
 				//"d": {
 					
 					
-					"x": 1,//parseFloat(acl.x.toFixed(2)),
-					"y": 2,//parseFloat(acl.y.toFixed(2)),
-					"z": 3,//parseFloat(acl.z.toFixed(2)),
-			        "idClients": "tester"//ClientID.toString()
+					"x": parseFloat(acl.x.toFixed(2)),
+					"y": parseFloat(acl.y.toFixed(2)),
+					"z": parseFloat(acl.z.toFixed(2)),
+			        "idClients": ClientID.toString()
 				//}
 			};
   var message = new Paho.MQTT.Message(JSON.stringify(payload));
