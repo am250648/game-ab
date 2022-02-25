@@ -15,7 +15,16 @@
 
       // Create a MQTT Client nstance 
       MQTT_Client = new Paho.MQTT.Client(WebSocket_MQTT_Broker_URL, MQTT_Client_ID);
-
+	    
+	    var options = {
+			useSSL:true,
+			timeout: 3,
+			//userName:"toyerbnp",
+			//password:"JUlkU47AEy8o",
+			onSuccess: onConnect
+			
+		  
+		 };
       // set callback handlers
       MQTT_Client.onConnectionLost = onConnectionLost;
       MQTT_Client.onMessageArrived = onMessageArrived;
