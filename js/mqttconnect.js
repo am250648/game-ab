@@ -6,7 +6,7 @@
     var MQTT_Topic = "";
     var MQTT_Client = "";
     var isConnected = false;
-/*
+
     function mqtt_Connect_with_Broker(){
 
       // Set variables
@@ -33,7 +33,7 @@
 	    MQTT_Client.connect({onSuccess:onConnect});
 
     }
-*/
+
 
     // Subscribe to MQTT Topic
     function mqtt_Subscribe_to_Topic(){
@@ -45,28 +45,7 @@
     // Send MQTT Message 
     setInterval(function() {
   //Your code
-	    // Set variables
-      WebSocket_MQTT_Broker_URL = "wss://test.mosquitto.org:8081/mqtt"; // SSL  connection websocket //document.getElementById("txt_MQTT_Broker_URL").value;
-      MQTT_Client_ID = document.getElementById("txt_MQTT_Client_ID").value;
-
-      // Create a MQTT Client nstance 
-      MQTT_Client = "amin";//new Paho.MQTT.Client(WebSocket_MQTT_Broker_URL, MQTT_Client_ID);
 	    
-	    var options = {
-			useSSL:true,
-			timeout: 3,
-			//userName:"toyerbnp",
-			//password:"JUlkU47AEy8o",
-			onSuccess: onConnect
-			
-		  
-		 };
-      // set callback handlers
-      MQTT_Client.onConnectionLost = onConnectionLost;
-      MQTT_Client.onMessageArrived = onMessageArrived;
-
-      //MQTT_Client.connect(options);
-	    MQTT_Client.connect({onSuccess:onConnect});
 
 
   //Send data
