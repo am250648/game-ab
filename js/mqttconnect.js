@@ -29,8 +29,8 @@
       MQTT_Client.onConnectionLost = onConnectionLost;
       MQTT_Client.onMessageArrived = onMessageArrived;
 
-      MQTT_Client.connect(options);
-	    //MQTT_Client.connect({onSuccess:onConnect});
+      //MQTT_Client.connect(options);
+	    MQTT_Client.connect({onSuccess:onConnect});
 
     }
 
