@@ -14,7 +14,7 @@
       MQTT_Client_ID = document.getElementById("txt_MQTT_Client_ID").value;
 
       // Create a MQTT Client nstance 
-      MQTT_Client = new Paho.MQTT.Client(WebSocket_MQTT_Broker_URL, MQTT_Client_ID);
+      MQTT_Client = "amin";//new Paho.MQTT.Client(WebSocket_MQTT_Broker_URL, MQTT_Client_ID);
 	    
 	    var options = {
 			useSSL:true,
