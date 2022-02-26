@@ -1,6 +1,6 @@
 [
     {
-        "id": "6643ec3b6f1d0d6d",
+        "id": "2c6a31137282f520",
         "type": "tab",
         "label": "game",
         "disabled": false,
@@ -8,52 +8,23 @@
         "env": []
     },
     {
-        "id": "35059ab265951dac",
-        "type": "inject",
-        "z": "6643ec3b6f1d0d6d",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "SELECT idClients,         SUM(x*x+y*y+z*z) AS result FROM game.clients GROUP BY idClients ORDER BY result DESC;",
-        "payload": "",
-        "payloadType": "date",
-        "x": 160,
-        "y": 380,
-        "wires": [
-            [
-                "ffec28a19cad5908"
-            ]
-        ]
-    },
-    {
-        "id": "ffec28a19cad5908",
+        "id": "461135e7d1b196dc",
         "type": "mysql",
-        "z": "6643ec3b6f1d0d6d",
-        "mydb": "55d62ff905a22938",
+        "z": "2c6a31137282f520",
+        "mydb": "7d26250c030727c3",
         "name": "",
-        "x": 360,
-        "y": 420,
+        "x": 430,
+        "y": 440,
         "wires": [
             [
-                "46464d584f7e1ad6"
+                "ab5609cbc2b9e4e4"
             ]
         ]
     },
     {
-        "id": "8b93a1ef308f537c",
+        "id": "85afd93353647cf9",
         "type": "debug",
-        "z": "6643ec3b6f1d0d6d",
+        "z": "2c6a31137282f520",
         "name": "",
         "active": true,
         "tosidebar": true,
@@ -62,33 +33,37 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 730,
+        "x": 790,
         "y": 400,
         "wires": []
     },
     {
-        "id": "46464d584f7e1ad6",
+        "id": "ab5609cbc2b9e4e4",
         "type": "function",
-        "z": "6643ec3b6f1d0d6d",
+        "z": "2c6a31137282f520",
         "name": "",
-        "func": "return msg;",
+        "func": "msg.payload = \n{\n    Winer1: msg.payload[0].idClients,\n    Result1: msg.payload[0].result,\n    Winer2: msg.payload[1].idClients,\n    Result2: msg.payload[1].result,\n    Winer3: msg.payload[2].idClients,\n    Result3: msg.payload[2].result\n    \n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 540,
-        "y": 360,
+        "x": 580,
+        "y": 440,
         "wires": [
             [
-                "8b93a1ef308f537c"
+                "85afd93353647cf9",
+                "a3ef4a686eb6ee3c",
+                "4e225be9133d67b8",
+                "ee078fc68ed8e1e1",
+                "19c6383e6387d7bf"
             ]
         ]
     },
     {
-        "id": "f29363f9ed31326e",
+        "id": "56af59bed74d95d2",
         "type": "function",
-        "z": "6643ec3b6f1d0d6d",
+        "z": "2c6a31137282f520",
         "name": "",
         "func": "msg.topic = 'INSERT INTO `game`.`clients`(`idclients`,`x`,`y`,`z`)VALUES(\"'+msg.payload.idClients+'\",'+msg.payload.x+','+msg.payload.y+','+msg.payload.z+');';\nreturn msg;",
         "outputs": 1,
@@ -96,18 +71,18 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 400,
-        "y": 900,
+        "x": 380,
+        "y": 760,
         "wires": [
             [
-                "3fd2ab14864b9fbc"
+                "f9422f6f40f56f87"
             ]
         ]
     },
     {
-        "id": "b62404b4d77973f5",
+        "id": "50044320c11e0354",
         "type": "mqtt in",
-        "z": "6643ec3b6f1d0d6d",
+        "z": "2c6a31137282f520",
         "name": "",
         "topic": "Game",
         "qos": "0",
@@ -121,28 +96,28 @@
         "y": 800,
         "wires": [
             [
-                "fd1f6d7451dd935e"
+                "cbaa9c201b470d1e"
             ]
         ]
     },
     {
-        "id": "3fd2ab14864b9fbc",
+        "id": "f9422f6f40f56f87",
         "type": "mysql",
-        "z": "6643ec3b6f1d0d6d",
-        "mydb": "55d62ff905a22938",
+        "z": "2c6a31137282f520",
+        "mydb": "7d26250c030727c3",
         "name": "",
-        "x": 540,
-        "y": 780,
+        "x": 510,
+        "y": 820,
         "wires": [
             [
-                "730919e734a65f08"
+                "e2357cea7111799f"
             ]
         ]
     },
     {
-        "id": "730919e734a65f08",
+        "id": "e2357cea7111799f",
         "type": "debug",
-        "z": "6643ec3b6f1d0d6d",
+        "z": "2c6a31137282f520",
         "name": "",
         "active": true,
         "tosidebar": true,
@@ -151,24 +126,24 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 690,
-        "y": 900,
+        "x": 670,
+        "y": 740,
         "wires": []
     },
     {
-        "id": "eb79d0fe1d609d5a",
+        "id": "953b40ba1e2a18dc",
         "type": "comment",
-        "z": "6643ec3b6f1d0d6d",
+        "z": "2c6a31137282f520",
         "name": "who wins?",
         "info": "",
-        "x": 140,
+        "x": 80,
         "y": 320,
         "wires": []
     },
     {
-        "id": "41c194df52143227",
+        "id": "a5a95a06b0579e6f",
         "type": "comment",
-        "z": "6643ec3b6f1d0d6d",
+        "z": "2c6a31137282f520",
         "name": "inject data to database",
         "info": "",
         "x": 160,
@@ -176,9 +151,9 @@
         "wires": []
     },
     {
-        "id": "9fb798a151acec79",
+        "id": "3aae6a12ba0cbbf6",
         "type": "inject",
-        "z": "6643ec3b6f1d0d6d",
+        "z": "2c6a31137282f520",
         "name": "",
         "props": [
             {
@@ -194,103 +169,47 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "DROP TABLE IF EXISTS clients;",
-        "payload": "",
         "payloadType": "date",
-        "x": 340,
-        "y": 660,
-        "wires": [
-            [
-                "03f94e12630ebeb8"
-            ]
-        ]
-    },
-    {
-        "id": "03f94e12630ebeb8",
-        "type": "mysql",
-        "z": "6643ec3b6f1d0d6d",
-        "mydb": "55d62ff905a22938",
-        "name": "",
-        "x": 520,
-        "y": 640,
-        "wires": [
-            [
-                "22bc56afca1981ec"
-            ]
-        ]
-    },
-    {
-        "id": "22bc56afca1981ec",
-        "type": "debug",
-        "z": "6643ec3b6f1d0d6d",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 750,
-        "y": 660,
-        "wires": []
-    },
-    {
-        "id": "457e090170dc6d67",
-        "type": "comment",
-        "z": "6643ec3b6f1d0d6d",
-        "name": "delete database table",
-        "info": "",
         "x": 320,
-        "y": 580,
-        "wires": []
-    },
-    {
-        "id": "73fa101f91449397",
-        "type": "inject",
-        "z": "6643ec3b6f1d0d6d",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "CREATE TABLE `game`.`clients` (   `idclients` VARCHAR(45) NULL,   `x` VARCHAR(45) NULL,   `y` VARCHAR(45) NULL,   `z` VARCHAR(45) NULL);",
-        "payload": "",
-        "payloadType": "date",
-        "x": 240,
-        "y": 120,
+        "y": 60,
         "wires": [
             [
-                "0ca1933b6239d311"
+                "bdc54da28c70125f"
             ]
         ]
     },
     {
-        "id": "0ca1933b6239d311",
+        "id": "bdc54da28c70125f",
         "type": "mysql",
-        "z": "6643ec3b6f1d0d6d",
-        "mydb": "55d62ff905a22938",
+        "z": "2c6a31137282f520",
+        "mydb": "7d26250c030727c3",
         "name": "",
-        "x": 420,
-        "y": 100,
+        "x": 510,
+        "y": 80,
         "wires": [
             [
-                "a42af26bc7a8d15d"
+                "85e99779599e2245"
             ]
         ]
     },
     {
-        "id": "a42af26bc7a8d15d",
+        "id": "8a02b0f9574c2fc6",
+        "type": "mysql",
+        "z": "2c6a31137282f520",
+        "mydb": "7d26250c030727c3",
+        "name": "",
+        "x": 810,
+        "y": 60,
+        "wires": [
+            [
+                "711f540c81484b85"
+            ]
+        ]
+    },
+    {
+        "id": "711f540c81484b85",
         "type": "debug",
-        "z": "6643ec3b6f1d0d6d",
+        "z": "2c6a31137282f520",
         "name": "",
         "active": true,
         "tosidebar": true,
@@ -299,24 +218,24 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 650,
+        "x": 970,
         "y": 120,
         "wires": []
     },
     {
-        "id": "fab22339753f7420",
+        "id": "b6140e81698e1551",
         "type": "comment",
-        "z": "6643ec3b6f1d0d6d",
+        "z": "2c6a31137282f520",
         "name": "Start game and xcreate table with attibutes",
         "info": "",
-        "x": 280,
-        "y": 40,
+        "x": 200,
+        "y": 20,
         "wires": []
     },
     {
-        "id": "9737aa275a688c4c",
+        "id": "e3594cca4921909d",
         "type": "inject",
-        "z": "6643ec3b6f1d0d6d",
+        "z": "2c6a31137282f520",
         "name": "ali",
         "props": [
             {
@@ -338,28 +257,28 @@
         "y": 1100,
         "wires": [
             [
-                "cd298ffe229c835d"
+                "4b1b71e10101ec6d"
             ]
         ]
     },
     {
-        "id": "cd298ffe229c835d",
+        "id": "4b1b71e10101ec6d",
         "type": "mysql",
-        "z": "6643ec3b6f1d0d6d",
-        "mydb": "55d62ff905a22938",
+        "z": "2c6a31137282f520",
+        "mydb": "7d26250c030727c3",
         "name": "",
-        "x": 400,
+        "x": 390,
         "y": 1120,
         "wires": [
             [
-                "7ce0d5df6b58a9e1"
+                "bd3c946245f378fe"
             ]
         ]
     },
     {
-        "id": "7ce0d5df6b58a9e1",
+        "id": "bd3c946245f378fe",
         "type": "debug",
-        "z": "6643ec3b6f1d0d6d",
+        "z": "2c6a31137282f520",
         "name": "",
         "active": true,
         "tosidebar": true,
@@ -373,9 +292,9 @@
         "wires": []
     },
     {
-        "id": "756bf9a178d48ba4",
+        "id": "9a467c0d64316eb3",
         "type": "comment",
-        "z": "6643ec3b6f1d0d6d",
+        "z": "2c6a31137282f520",
         "name": "test inject data to database",
         "info": "",
         "x": 210,
@@ -383,9 +302,9 @@
         "wires": []
     },
     {
-        "id": "99fc960a8c88f27a",
+        "id": "7f37e3547705a69e",
         "type": "inject",
-        "z": "6643ec3b6f1d0d6d",
+        "z": "2c6a31137282f520",
         "name": "amin",
         "props": [
             {
@@ -407,15 +326,15 @@
         "y": 1160,
         "wires": [
             [
-                "cd298ffe229c835d"
+                "4b1b71e10101ec6d"
             ]
         ]
     },
     {
-        "id": "79ae706b4439531d",
+        "id": "b9e28300bbbeb762",
         "type": "inject",
-        "z": "6643ec3b6f1d0d6d",
-        "name": "ahmed",
+        "z": "2c6a31137282f520",
+        "name": "sara",
         "props": [
             {
                 "p": "payload"
@@ -429,37 +348,346 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "topic": "INSERT INTO `game`.`clients` (`idclients`, `x`, `y`, `z`) VALUES (\"ahmed\",1,12,1);",
-        "payload": "",
+        "topic": "INSERT INTO `game`.`clients` (`idclients`, `x`, `y`, `z`) VALUES (\"sara\",1,12,1);",
         "payloadType": "date",
         "x": 170,
         "y": 1220,
         "wires": [
             [
-                "cd298ffe229c835d"
+                "4b1b71e10101ec6d"
             ]
         ]
     },
     {
-        "id": "fd1f6d7451dd935e",
+        "id": "cbaa9c201b470d1e",
         "type": "json",
-        "z": "6643ec3b6f1d0d6d",
+        "z": "2c6a31137282f520",
         "name": "",
         "property": "payload",
         "action": "",
         "pretty": false,
         "x": 230,
-        "y": 900,
+        "y": 820,
         "wires": [
             [
-                "f29363f9ed31326e"
+                "56af59bed74d95d2"
             ]
         ]
     },
     {
-        "id": "55d62ff905a22938",
+        "id": "a3ef4a686eb6ee3c",
+        "type": "ui_text",
+        "z": "2c6a31137282f520",
+        "group": "07f33f61fa494e79",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Winner 1",
+        "format": "{{msg.payload.Winer1}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 800,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "abdef4716dd21b1a",
+        "type": "function",
+        "z": "2c6a31137282f520",
+        "name": "",
+        "func": "if(msg.payload == \"showresult\")\n{\n  msg.topic = \"SELECT idClients,         SQRT(SUM(x*x+y*y+z*z)) AS result FROM game.clients GROUP BY idClients ORDER BY result DESC;\"\n  \n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 260,
+        "y": 460,
+        "wires": [
+            [
+                "461135e7d1b196dc"
+            ]
+        ]
+    },
+    {
+        "id": "f8d9049a2601d8a8",
+        "type": "ui_button",
+        "z": "2c6a31137282f520",
+        "name": "",
+        "group": "07f33f61fa494e79",
+        "order": 21,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Show results",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 90,
+        "y": 380,
+        "wires": [
+            [
+                "2f2ee465f971ccee",
+                "83f01a2a2d195c56"
+            ]
+        ]
+    },
+    {
+        "id": "4e225be9133d67b8",
+        "type": "ui_text",
+        "z": "2c6a31137282f520",
+        "group": "07f33f61fa494e79",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Winner 2",
+        "format": "{{msg.payload.Winer2}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 800,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "0ba02514c19f3a51",
+        "type": "inject",
+        "z": "2c6a31137282f520",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 250,
+        "y": 1000,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ee078fc68ed8e1e1",
+        "type": "mqtt out",
+        "z": "2c6a31137282f520",
+        "name": "",
+        "topic": "Result",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "152e1e6d744154b7",
+        "x": 810,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "01fc166708419852",
+        "type": "mqtt in",
+        "z": "2c6a31137282f520",
+        "name": "",
+        "topic": "showresult",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "152e1e6d744154b7",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 80,
+        "y": 460,
+        "wires": [
+            [
+                "abdef4716dd21b1a"
+            ]
+        ]
+    },
+    {
+        "id": "2f2ee465f971ccee",
+        "type": "function",
+        "z": "2c6a31137282f520",
+        "name": "",
+        "func": "msg.topic = \"SELECT idClients,         SUM(x*x+y*y+z*z) AS result FROM game.clients GROUP BY idClients ORDER BY result DESC;\"\n  \n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 260,
+        "y": 400,
+        "wires": [
+            [
+                "461135e7d1b196dc"
+            ]
+        ]
+    },
+    {
+        "id": "85e99779599e2245",
+        "type": "function",
+        "z": "2c6a31137282f520",
+        "name": "",
+        "func": "msg.topic = \"CREATE TABLE `game`.`clients` (   `idclients` VARCHAR(45) NULL,   `x` VARCHAR(45) NULL,   `y` VARCHAR(45) NULL,   `z` VARCHAR(45) NULL);INSERT INTO `game`.`clients` (`idclients`, `x`, `y`, `z`) VALUES (1,0,0,0); INSERT INTO `game`.`clients` (`idclients`, `x`, `y`, `z`) VALUES (2,0,0,0);INSERT INTO `game`.`clients` (`idclients`, `x`, `y`, `z`) VALUES (3,0,0,0);\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 140,
+        "wires": [
+            [
+                "8a02b0f9574c2fc6"
+            ]
+        ]
+    },
+    {
+        "id": "19c6383e6387d7bf",
+        "type": "ui_text",
+        "z": "2c6a31137282f520",
+        "group": "07f33f61fa494e79",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Winner 3",
+        "format": "{{msg.payload.Winer3}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 800,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "e0c39ce8c442620a",
+        "type": "ui_button",
+        "z": "2c6a31137282f520",
+        "name": "",
+        "group": "07f33f61fa494e79",
+        "order": 21,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Start Game",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 130,
+        "y": 120,
+        "wires": [
+            [
+                "756b4f76165d03dc",
+                "2040d3c9a8b6876b"
+            ]
+        ]
+    },
+    {
+        "id": "756b4f76165d03dc",
+        "type": "function",
+        "z": "2c6a31137282f520",
+        "name": "",
+        "func": "msg.topic= \"DROP TABLE IF EXISTS clients;\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 120,
+        "wires": [
+            [
+                "bdc54da28c70125f"
+            ]
+        ]
+    },
+    {
+        "id": "25294db979b07bc2",
+        "type": "ui_template",
+        "z": "2c6a31137282f520",
+        "group": "07f33f61fa494e79",
+        "name": "",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "format": "<div ng-bind-html=\"msg.payload\"></div>",
+        "storeOutMessages": true,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 520,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "83f01a2a2d195c56",
+        "type": "function",
+        "z": "2c6a31137282f520",
+        "name": "",
+        "func": "msg.payload=\"\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 260,
+        "wires": [
+            [
+                "25294db979b07bc2"
+            ]
+        ]
+    },
+    {
+        "id": "2040d3c9a8b6876b",
+        "type": "function",
+        "z": "2c6a31137282f520",
+        "name": "",
+        "func": "msg.payload=\"New game started!\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 180,
+        "wires": [
+            [
+                "25294db979b07bc2"
+            ]
+        ]
+    },
+    {
+        "id": "7d26250c030727c3",
         "type": "MySQLdatabase",
-        "name": "hassdb",
+        "name": "game",
         "host": "127.0.0.1",
         "port": "3306",
         "db": "game",
@@ -491,5 +719,24 @@
         "willPayload": "",
         "willMsg": {},
         "sessionExpiry": ""
+    },
+    {
+        "id": "07f33f61fa494e79",
+        "type": "ui_group",
+        "name": "game",
+        "tab": "d5a2f3f13afaea76",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "d5a2f3f13afaea76",
+        "type": "ui_tab",
+        "name": "IOT Game",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
     }
 ]
