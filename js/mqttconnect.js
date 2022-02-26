@@ -204,7 +204,7 @@ function showresults()
 						document.getElementById("winer3").innerHTML = obj.Winer3;
 						document.getElementById("result1").innerHTML = obj.Result1.toFixed(2);
 						document.getElementById("result2").innerHTML = obj.Result2.toFixed(2);
-						document.getElementById("result3").innerHTML = obj.Result2.toFixed(2);
+						document.getElementById("result3").innerHTML = obj.Result3.toFixed(2);
 
       //Set_New_Console_Msg("MQTT Message Recieved. "  + " Message: " + "\"" +  message.payloadString + "\"" + " MQTT Topic: " + "\"" + message.destinationName + "\"" + " QoS Value: " + "\"" + message.qos + "\"");
     } 
