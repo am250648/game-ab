@@ -7,6 +7,7 @@
     var MQTT_Client = "";
     var isConnected = false;
     var button_clicked = false;
+	var firstconnect = true;
    
     var startgame = document.getElementById("startgame");
 
@@ -33,6 +34,11 @@
 	//window.onload = MQTTconnect;
 
 function Start(){
+	
+	
+		MQTTconnect();
+	
+
 	
 	                    document.getElementById("winer1").innerHTML = "";
 						document.getElementById("winer2").innerHTML = "";
@@ -83,7 +89,7 @@ function Start(){
 				
 				console.error(err);
 				isConnected = false;
-				MQTTconnect();
+				//MQTTconnect();
 				changeConnectionStatusImage("images/disconnected.svg");
 				document.getElementById("connection").innerHTML = "disconnected";
 				//setTimeout(connectDevice(), 1000);
@@ -196,9 +202,9 @@ function showresults()
 						document.getElementById("winer1").innerHTML = obj.Winer1;
 						document.getElementById("winer2").innerHTML = obj.Winer2;
 						document.getElementById("winer3").innerHTML = obj.Winer3;
-						document.getElementById("result1").innerHTML = obj.Result1;
-						document.getElementById("result2").innerHTML = obj.Result2;
-						document.getElementById("result3").innerHTML = obj.Result2;
+						document.getElementById("result1").innerHTML = obj.Result1.toFixed(2);
+						document.getElementById("result2").innerHTML = obj.Result2.toFixed(2);
+						document.getElementById("result3").innerHTML = obj.Result2.toFixed(2);
 
       //Set_New_Console_Msg("MQTT Message Recieved. "  + " Message: " + "\"" +  message.payloadString + "\"" + " MQTT Topic: " + "\"" + message.destinationName + "\"" + " QoS Value: " + "\"" + message.qos + "\"");
     } 
@@ -239,7 +245,7 @@ function showresults()
 
     // Randomly generate Client ID
     function gen_MQTT_Client_ID(){
-      document.getElementById("txt_MQTT_Client_ID").value = Math.floor(100000000000 + Math.random() * 900000000000);
+      document.getElementById("txt_MQTT_Client_ID").value = Math.floor(10000 + Math.random() * 90000);
     }
     function changeConnectionStatusImage(image) {
 		document.getElementById("connectionImage").src = image;
