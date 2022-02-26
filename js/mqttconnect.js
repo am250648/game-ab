@@ -6,59 +6,59 @@
     var MQTT_Topic = "";
     var MQTT_Client = "";
     var isConnected = false;
+    var button_clicked = false;
+   
+    var startgame = document.getElementById("startgame");
 
-    function mqtt_Connect_with_Broker(){
-
-      // Set variables
+    startgame.addEventListener("click", Start);
+	
+	function MQTTconnect() {	
+			//Connect to the broker
+			    // Set variables
       WebSocket_MQTT_Broker_URL = "wss://test.mosquitto.org:8081/mqtt"; // SSL  connection websocket //document.getElementById("txt_MQTT_Broker_URL").value;
       MQTT_Client_ID = document.getElementById("txt_MQTT_Client_ID").value;
 
       // Create a MQTT Client nstance 
-      MQTT_Client = "amin";//new Paho.MQTT.Client(WebSocket_MQTT_Broker_URL, MQTT_Client_ID);
+      MQTT_Client = new Paho.MQTT.Client(WebSocket_MQTT_Broker_URL, MQTT_Client_ID);
 	    
-	    var options = {
-			useSSL:true,
-			timeout: 3,
-			//userName:"toyerbnp",
-			//password:"JUlkU47AEy8o",
-			onSuccess: onConnect
-			
-		  
-		 };
+	    
       // set callback handlers
       MQTT_Client.onConnectionLost = onConnectionLost;
       MQTT_Client.onMessageArrived = onMessageArrived;
 
       //MQTT_Client.connect(options);
 	    MQTT_Client.connect({onSuccess:onConnect});
+	}
+	
+	//window.onload = MQTTconnect;
 
-    }
+function Start(){
+    console.log("Started");
+    startgame.removeEventListener("click", Start);
+    startgame.addEventListener("click", Stop);
+    startgame.value = "Stop";
+	
 
-
-    // Subscribe to MQTT Topic
-    function mqtt_Subscribe_to_Topic(){
-      MQTT_Subscribe_Topic = document.getElementById("txt_MQTT_Subscribe_Topic").value;
-      MQTT_Client.subscribe(MQTT_Subscribe_Topic);
-      Set_New_Console_Msg("Subscribed to MQTT Topic: " + "\"" + MQTT_Subscribe_Topic + "\"" );
-    }
-
-    // Send MQTT Message 
+	
+		
+		
+	
+		
+		// Send MQTT Message 
     setInterval(function() {
   //Your code
-	    
-
-
   //Send data
+  //var x=Math.floor(Math.random() * 10000);
   var ClientID = document.getElementById("txt_MQTT_Client_ID").value;
   if (isConnected) {
   var payload = {
 				//"d": {
 					
 					
-					"x": 1,//parseFloat(acl.x.toFixed(2)),
-					"y": 2,//parseFloat(acl.y.toFixed(2)),
-					"z": 3,//parseFloat(acl.z.toFixed(2)),
-			        "idClients": "tester"//ClientID.toString()
+					"x": parseFloat(acl.x.toFixed(2)),
+					"y": parseFloat(acl.y.toFixed(2)),
+					"z": parseFloat(acl.z.toFixed(2)),
+			        "idClients": ClientID.toString()
 				//}
 			};
   var message = new Paho.MQTT.Message(JSON.stringify(payload));
@@ -68,7 +68,7 @@
           
            //Set_New_Console_Msg("Published " + "\"" + document.getElementById("txt_MQTT_Msg").value + "\"" + "to MQTT Topic: " + "\"" +  document.getElementById("txt_MQTT_Publish_Topic").value + "\"");
 	        changeConnectionStatusImage("images/connected.svg");
-			document.getElementById("connection").innerHTML = "disconnected";
+			document.getElementById("connection").innerHTML = "connected";
 			
 			MQTT_Client.send(message);
 				
@@ -76,14 +76,67 @@
 				
 				console.error(err);
 				isConnected = false;
-				changeConnectionStatusImage("images/connected.svg");
+				changeConnectionStatusImage("images/disconnected.svg");
 				document.getElementById("connection").innerHTML = "disconnected";
 				//setTimeout(connectDevice(), 1000);
 			}
        }
 }, 500); //Every 1000ms = 1sec
-      
+
+
+	  //console.log(MQTT_Subscribe_Topic);
+	//document.getElementById("winer1").innerHTML = MQTT_Subscribe_Topic;
+}
+
+function Stop(){
+	MQTT_Client.disconnect();
+    console.log("Stopped");
+    startgame.removeEventListener("click", Stop);
+    startgame.addEventListener("click", Start);
+    startgame.value = "Start";
+	
+}
+
+
+    // Subscribe to MQTT Topic
+    function mqtt_Subscribe_to_Topic(){
+      MQTT_Subscribe_Topic = "Result";
+      MQTT_Client.subscribe(MQTT_Subscribe_Topic);
+	  console.log(MQTT_Subscribe_Topic);
 	  
+      //Set_New_Console_Msg("Subscribed to MQTT Topic: " + "\"" + MQTT_Subscribe_Topic + "\"" );
+    }
+
+   
+function showresults()
+{
+	
+	if (isConnected) {
+  var payload = "showresult";
+  var message = new Paho.MQTT.Message(payload);
+  message.destinationName = "showresult";
+  try {
+	  
+          
+           //Set_New_Console_Msg("Published " + "\"" + document.getElementById("txt_MQTT_Msg").value + "\"" + "to MQTT Topic: " + "\"" +  document.getElementById("txt_MQTT_Publish_Topic").value + "\"");
+	        changeConnectionStatusImage("images/connected.svg");
+			document.getElementById("connection").innerHTML = "connected";
+			
+			MQTT_Client.send(message);
+				
+			} catch (err) {
+				
+				console.error(err);
+				isConnected = false;
+				changeConnectionStatusImage("images/disconnected.svg");
+				document.getElementById("connection").innerHTML = "disconnected";
+				//setTimeout(connectDevice(), 1000);
+			}
+       }
+	   
+	   tb.style.display = "block";
+	
+}	
     
 	
 	
@@ -91,6 +144,20 @@
     // called when the client connects
     function onConnect() {
 	isConnected = true;
+	
+	 changeConnectionStatusImage("images/connected.svg");
+			document.getElementById("connection").innerHTML = "connected";
+			
+		MQTT_Subscribe_Topic = "Result";
+      MQTT_Client.subscribe(MQTT_Subscribe_Topic);
+      // Once a connection has been made, make a subscription and send a message.
+      //Set_New_Console_Msg("Connected with MQTT Broker: " + "\"" + document.getElementById("txt_MQTT_Broker_URL").value + "\"");
+    }
+	function onDisonnect() {
+	isConnected = false;
+	console.log("disconnected");
+	 changeConnectionStatusImage("images/disconnected.svg");
+			document.getElementById("connection").innerHTML = "disconnected";
       // Once a connection has been made, make a subscription and send a message.
       //Set_New_Console_Msg("Connected with MQTT Broker: " + "\"" + document.getElementById("txt_MQTT_Broker_URL").value + "\"");
     }
@@ -105,6 +172,17 @@
 
     // called when a message arrives
     function onMessageArrived(message) {
+		//document.getElementById("winer1").innerHTML = message.payloadString;
+		console.log(message.payloadString);
+		const obj = JSON.parse(message.payloadString);
+		console.log(obj.Winer1);
+						document.getElementById("winer1").innerHTML = obj.Winer1;
+						document.getElementById("winer2").innerHTML = obj.Winer2;
+						document.getElementById("winer3").innerHTML = obj.Winer3;
+						document.getElementById("result1").innerHTML = obj.Result1;
+						document.getElementById("result2").innerHTML = obj.Result2;
+						document.getElementById("result3").innerHTML = obj.Result2;
+
       //Set_New_Console_Msg("MQTT Message Recieved. "  + " Message: " + "\"" +  message.payloadString + "\"" + " MQTT Topic: " + "\"" + message.destinationName + "\"" + " QoS Value: " + "\"" + message.qos + "\"");
     } 
 
@@ -146,5 +224,7 @@
     function gen_MQTT_Client_ID(){
       document.getElementById("txt_MQTT_Client_ID").value = Math.floor(100000000000 + Math.random() * 900000000000);
     }
-
+    function changeConnectionStatusImage(image) {
+		document.getElementById("connectionImage").src = image;
+	}
 
