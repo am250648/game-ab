@@ -33,13 +33,20 @@
 	//window.onload = MQTTconnect;
 
 function Start(){
+	
+	                    document.getElementById("winer1").innerHTML = "";
+						document.getElementById("winer2").innerHTML = "";
+						document.getElementById("winer3").innerHTML = "";
+						document.getElementById("result1").innerHTML = "";
+						document.getElementById("result2").innerHTML = "";
+						document.getElementById("result3").innerHTML = "";
     console.log("Started");
     startgame.removeEventListener("click", Start);
     startgame.addEventListener("click", Stop);
     startgame.value = "Stop";
 	
-
-	
+	button_clicked  = true;
+	tb.style.display = "none";
 		
 		
 	
@@ -50,7 +57,7 @@ function Start(){
   //Send data
   //var x=Math.floor(Math.random() * 10000);
   var ClientID = document.getElementById("txt_MQTT_Client_ID").value;
-  if (isConnected) {
+  if (isConnected && button_clicked) {
   var payload = {
 				//"d": {
 					
@@ -76,6 +83,7 @@ function Start(){
 				
 				console.error(err);
 				isConnected = false;
+				MQTTconnect();
 				changeConnectionStatusImage("images/disconnected.svg");
 				document.getElementById("connection").innerHTML = "disconnected";
 				//setTimeout(connectDevice(), 1000);
@@ -89,11 +97,12 @@ function Start(){
 }
 
 function Stop(){
-	MQTT_Client.disconnect();
+	//MQTT_Client.disconnect();
     console.log("Stopped");
     startgame.removeEventListener("click", Stop);
     startgame.addEventListener("click", Start);
     startgame.value = "Start";
+	button_clicked = false;
 	
 }
 
@@ -112,30 +121,38 @@ function showresults()
 {
 	
 	if (isConnected) {
-  var payload = "showresult";
-  var message = new Paho.MQTT.Message(payload);
-  message.destinationName = "showresult";
-  try {
-	  
-          
-           //Set_New_Console_Msg("Published " + "\"" + document.getElementById("txt_MQTT_Msg").value + "\"" + "to MQTT Topic: " + "\"" +  document.getElementById("txt_MQTT_Publish_Topic").value + "\"");
-	        changeConnectionStatusImage("images/connected.svg");
-			document.getElementById("connection").innerHTML = "connected";
-			
-			MQTT_Client.send(message);
-				
-			} catch (err) {
-				
+		
+		if(button_clicked)
+		{
+						alert("please stop the game first");
+						tb.style.display = "none";
+		}
+		else
+		{
+			tb.style.display = "block";
+			var payload = "showresult";
+			var message = new Paho.MQTT.Message(payload);
+			message.destinationName = "showresult";
+			try 
+			{
+				changeConnectionStatusImage("images/connected.svg");
+				document.getElementById("connection").innerHTML = "connected";
+			    MQTT_Client.send(message);
+			}
+			catch (err) 
+			{
 				console.error(err);
 				isConnected = false;
+				MQTTconnect();
 				changeConnectionStatusImage("images/disconnected.svg");
 				document.getElementById("connection").innerHTML = "disconnected";
 				//setTimeout(connectDevice(), 1000);
 			}
-       }
-	   
-	   tb.style.display = "block";
-	
+		}
+	}
+		
+		
+  	
 }	
     
 	
