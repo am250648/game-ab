@@ -95,7 +95,7 @@ function Start(){
 				//setTimeout(connectDevice(), 1000);
 			}
        }
-}, 500); //Every 1000ms = 1sec
+}, 100); //Every 1000ms = 1sec
 
 
 	  //console.log(MQTT_Subscribe_Topic);
