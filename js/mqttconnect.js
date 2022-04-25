@@ -29,6 +29,10 @@
 
       //MQTT_Client.connect(options);
 	    MQTT_Client.connect({onSuccess:onConnect});
+
+      MQTT_Subscribe_Topic = "LPG/ping";
+      MQTT_Client.subscribe(MQTT_Subscribe_Topic);
+	    console.log(MQTT_Subscribe_Topic);
 	}
 	
 	//window.onload = MQTTconnect;
@@ -115,7 +119,7 @@ function Stop(){
 
     // Subscribe to MQTT Topic
     function mqtt_Subscribe_to_Topic(){
-      MQTT_Subscribe_Topic = "Result";
+      MQTT_Subscribe_Topic = "LPG/ping";
       MQTT_Client.subscribe(MQTT_Subscribe_Topic);
 	  console.log(MQTT_Subscribe_Topic);
 	  
